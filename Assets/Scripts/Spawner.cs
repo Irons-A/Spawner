@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject _enemy;
     [SerializeField] private int _spawningInterval;
@@ -31,9 +31,9 @@ public class SpawnManager : MonoBehaviour
             Instantiate(_enemy, _spawners[i].position, Quaternion.identity);
             Debug.Log("Spawned");
 
-            if (i == _spawners.Length)
+            if (i == _spawners.Length-1)
             {
-                i = 0;
+                i = -1;
                 Debug.Log("Reset");
             }
 
