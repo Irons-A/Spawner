@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Enemy))]
+
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemy;
+    [SerializeField] private Enemy _enemy;
     [SerializeField] private int _spawningInterval;
     [SerializeField] private Transform _spawnersHandler;
     private Transform[] _spawners;
@@ -19,22 +21,20 @@ public class Spawner : MonoBehaviour
             _spawners[i] = _spawnersHandler.GetChild(i);
         }
 
-        _spawnRoutine = StartCoroutine(SpawnRoutine());
+        _spawnRoutine = StartCoroutine(Spawn());
     }
 
-    private IEnumerator SpawnRoutine()
+    private IEnumerator Spawn()
     {
         var interval = new WaitForSeconds(2);
 
         for (int i = 0; i < _spawners.Length; i++)
         {
             Instantiate(_enemy, _spawners[i].position, Quaternion.identity);
-            Debug.Log("Spawned");
 
             if (i == _spawners.Length-1)
             {
                 i = -1;
-                Debug.Log("Reset");
             }
 
             yield return interval;
